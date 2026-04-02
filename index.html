@@ -1,113 +1,348 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Stock Dashboard - Design</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #0d0d0d;
-      color: #ffffff;
-    }
-    .header {
-      background: #111111;
-      color: #00c7ff;
-      padding: 20px;
-      text-align: center;
-      font-size: 30px;
-      font-weight: bold;
-    }
-    .container {
-      width: 85%;
-      margin: auto;
-      padding: 20px;
-    }
-    .cards {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      margin-top: 20px;
-    }
-    .card {
-      background: #1a1a1a;
-      width: 30%;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0px 3px 10px rgba(0,255,255,0.15);
-      text-align: center;
-      margin-bottom: 20px;
-      transition: 0.3s;
-    }
-    .card:hover {
-      transform: scale(1.03);
-      box-shadow: 0px 5px 15px rgba(0,255,255,0.3);
-    }
-    .widget-box {
-      background: #151515;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0px 3px 10px rgba(255,255,255,0.1);
-      margin-top: 30px;
-    }
-    h1, h2, h3 {
-      color: #00ccff;
-    }
-    .footer {
-      background: #111111;
-      color: #737373;
-      text-align: center;
-      padding: 10px;
-      margin-top: 30px;
-      font-size: 14px;
-    }
-  </style>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y5RTGFKKZ1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Nutrients — Niroj Sapkota</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --carb: #FFCF56;
+    --prot: #F4816A;
+    --fat:  #6BB5D6;
+    --vit:  #72C28A;
+    --ink:  #1E1B18;
+    --ink2: #5C5750;
+    --bg:   #FDFAF5;
+  }
 
-  gtag('config', 'G-Y5RTGFKKZ1');
-</script>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    width: 1056px;
+  }
+
+  .page {
+    width: 1056px;
+    min-height: 816px;
+    padding: 32px 40px 28px;
+    position: relative;
+    background: var(--bg);
+    overflow: hidden;
+  }
+
+  .page::before {
+    content: '';
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      radial-gradient(circle at 90% 10%, rgba(255,207,86,0.15) 0%, transparent 38%),
+      radial-gradient(circle at 10% 88%, rgba(114,194,138,0.12) 0%, transparent 36%),
+      radial-gradient(circle at 55% 55%, rgba(107,181,214,0.07) 0%, transparent 55%);
+    z-index: 0;
+  }
+
+  .header {
+    position: relative; z-index: 1;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .title-eyebrow {
+    font-size: 9.5px; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--ink2); font-weight: 500; margin-bottom: 5px;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px; font-weight: 900; line-height: 0.92;
+    color: var(--ink); letter-spacing: -1.5px;
+  }
+  h1 em { font-style: italic; color: var(--ink2); }
+  .header-right { text-align: right; padding-bottom: 3px; }
+  .header-right .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px; font-weight: 700; color: var(--ink);
+    display: block; margin-bottom: 2px;
+  }
+  .header-right .sub {
+    font-size: 9.5px; color: var(--ink2); letter-spacing: 2px;
+    text-transform: uppercase; line-height: 1.8;
+  }
+
+  .divider {
+    position: relative; z-index: 1;
+    height: 1px; background: rgba(30,27,24,0.12);
+    margin-bottom: 16px;
+  }
+  .divider::before {
+    content: '';
+    position: absolute; left: 0; top: -1px;
+    width: 80px; height: 3px; border-radius: 2px;
+    background: linear-gradient(90deg, var(--carb), var(--prot), var(--fat), var(--vit));
+  }
+
+  .legend {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 14px;
+  }
+  .legend-label {
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--ink2); font-weight: 500; margin-right: 6px;
+  }
+  .leg-pill {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 10px; font-weight: 600; color: var(--ink);
+    padding: 4px 12px; border-radius: 100px;
+  }
+  .leg-pill.carb { background: #FFF3C4; }
+  .leg-pill.prot { background: #FFE8E4; }
+  .leg-pill.fat  { background: #DFF0F9; }
+  .leg-pill.vit  { background: #E2F5E9; }
+  .leg-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── UNIFIED COLLAGE ── */
+  .collage {
+    position: relative; z-index: 1;
+    width: 976px;
+    height: 558px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(30,27,24,0.06), 0 10px 32px rgba(30,27,24,0.08);
+    overflow: visible;
+  }
+
+  .food {
+    position: absolute;
+  }
+
+  .food img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 3px 14px rgba(30,27,24,0.22);
+  }
+
+  .food-label {
+    position: absolute;
+    bottom: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--ink);
+    padding: 3px 9px;
+    border-radius: 100px;
+    box-shadow: 0 2px 6px rgba(30,27,24,0.18);
+    letter-spacing: 0.1px;
+    z-index: 10;
+  }
+
+  .lbl-carb { background: var(--carb); }
+  .lbl-prot { background: var(--prot); color: #fff; }
+  .lbl-fat  { background: var(--fat);  color: #fff; }
+  .lbl-vit  { background: var(--vit);  color: #fff; }
+
+  .footer {
+    position: relative; z-index: 1;
+    margin-top: 24px;
+    display: flex; align-items: center;
+    padding: 10px 20px;
+    background: var(--ink); border-radius: 14px;
+  }
+  .footer-label {
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,0.35); margin-right: 14px; font-weight: 500;
+  }
+  .fleg {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 9.5px; font-weight: 500; color: rgba(255,255,255,0.7);
+    padding: 0 13px; border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .fleg:last-of-type { border-right: none; }
+  .fdot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .footer-right {
+    margin-left: auto; font-size: 9px; color: rgba(255,255,255,0.22);
+    letter-spacing: 1.5px; text-transform: uppercase;
+  }
+</style>
 </head>
 <body>
+<div class="page">
+
   <div class="header">
-    📉 Stock Dashboard - Design
-  </div>
-  <div class="container">
-    <div class="cards">
-      <div class="card">
-        <h3>📊 Most Popular Stock</h3>
-        <p>Apple (AAPL)</p>
-      </div>
-      <div class="card">
-        <h3>🚀 Best Performer</h3>
-        <p>Tesla (TSLA)</p>
-      </div>
-      <div class="card">
-        <h3>📉 Watching Closely</h3>
-        <p>Microsoft (MSFT)</p>
-      </div>
+    <div>
+      <div class="title-eyebrow">Food &amp; Nutrition · Nutrient Collage</div>
+      <h1>My <em>Nutrients</em></h1>
     </div>
-    <div class="widget-box">
-      <h2>Apple (AAPL)</h2>
-      <iframe src="https://s.tradingview.com/widgetembed/?symbol=AAPL" width="100%" height="500" frameborder="0"></iframe>
-      <p style="font-size: 12px; color: #595959;">Widget provided by TradingView</p>
-    </div>
-    <div class="widget-box">
-      <h2>Tesla (TSLA)</h2>
-      <iframe src="https://s.tradingview.com/widgetembed/?symbol=TSLA" width="100%" height="500" frameborder="0"></iframe>
-    </div>
-    <div class="widget-box">
-      <h2>Microsoft (MSFT)</h2>
-      <iframe src="https://s.tradingview.com/widgetembed/?symbol=MSFT" width="100%" height="500" frameborder="0"></iframe>
+    <div class="header-right">
+      <span class="name">Niroj Sapkota</span>
+      <span class="sub">Birchmount Park C.I.<br>Food &amp; Nutrition</span>
     </div>
   </div>
+
+  <div class="divider"></div>
+
+  <div class="legend">
+    <span class="legend-label">Categories</span>
+    <span class="leg-pill carb"><span class="leg-dot" style="background:var(--carb)"></span>Carbohydrates</span>
+    <span class="leg-pill prot"><span class="leg-dot" style="background:var(--prot)"></span>Protein</span>
+    <span class="leg-pill fat"><span class="leg-dot" style="background:var(--fat)"></span>Fats</span>
+    <span class="leg-pill vit"><span class="leg-dot" style="background:var(--vit)"></span>Vitamins &amp; Minerals</span>
+  </div>
+
+  <!-- ── ALL FOOD IMAGES TOGETHER IN ONE COLLAGE ── -->
+  <div class="collage">
+
+    <!-- ROW 1 -->
+    <!-- Oats → fiber (carb) -->
+    <div class="food" style="left:14px; top:16px; width:152px; height:152px; transform:rotate(-1.5deg)">
+      <img src="https://images.unsplash.com/photo-1495214783159-3503fd1b572d?w=300&q=80" alt="Oats">
+      <span class="food-label lbl-carb">🌾 Oats → fiber</span>
+    </div>
+
+    <!-- Sweet Potato → starch (carb) -->
+    <div class="food" style="left:180px; top:8px; width:144px; height:144px; transform:rotate(1.3deg)">
+      <img src="https://images.unsplash.com/photo-1570586437263-ab629fccc818?w=300&q=80" alt="Sweet Potato">
+      <span class="food-label lbl-carb">🍠 Sweet Potato → starch</span>
+    </div>
+
+    <!-- Chicken → protein -->
+    <div class="food" style="left:340px; top:10px; width:162px; height:162px; transform:rotate(-0.8deg)">
+      <img src="https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=350&q=80" alt="Chicken">
+      <span class="food-label lbl-prot">🍗 Chicken → protein</span>
+    </div>
+
+    <!-- Avocado → unsaturated fat -->
+    <div class="food" style="left:518px; top:8px; width:154px; height:154px; transform:rotate(1.1deg)">
+      <img src="https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=320&q=80" alt="Avocado">
+      <span class="food-label lbl-fat">🥑 Avocado → unsaturated fat</span>
+    </div>
+
+    <!-- Cheese → saturated fat -->
+    <div class="food" style="left:686px; top:14px; width:148px; height:148px; transform:rotate(-2deg)">
+      <img src="https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=320&q=80" alt="Cheese">
+      <span class="food-label lbl-fat">🧀 Cheese → saturated fat</span>
+    </div>
+
+    <!-- Fruit → vitamins & minerals -->
+    <div class="food" style="left:846px; top:10px; width:118px; height:118px; transform:rotate(1.6deg)">
+      <img src="https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=340&q=80" alt="Fruit">
+      <span class="food-label lbl-vit">🍎 Fruit → vitamin C</span>
+    </div>
+
+    <!-- ROW 2 -->
+    <!-- Banana → sugar (carb) -->
+    <div class="food" style="left:16px; top:198px; width:138px; height:138px; transform:rotate(1.8deg)">
+      <img src="https://images.unsplash.com/photo-1481349518771-20055b2a7b24?w=300&q=80" alt="Banana">
+      <span class="food-label lbl-carb">🍌 Banana → sugar</span>
+    </div>
+
+    <!-- Apple → sugar (carb) -->
+    <div class="food" style="left:168px; top:182px; width:134px; height:134px; transform:rotate(-1.2deg)">
+      <img src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=300&q=80" alt="Apple">
+      <span class="food-label lbl-carb">🍎 Apple → sugar</span>
+    </div>
+
+    <!-- Eggs → protein -->
+    <div class="food" style="left:318px; top:200px; width:148px; height:148px; transform:rotate(1.5deg)">
+      <img src="https://images.unsplash.com/photo-1582169505937-b9992bd01ed9?w=350&q=80" alt="Eggs">
+      <span class="food-label lbl-prot">🍳 Eggs → protein</span>
+    </div>
+
+    <!-- Nuts → unsaturated fat -->
+    <div class="food" style="left:482px; top:190px; width:144px; height:144px; transform:rotate(-1.6deg)">
+      <img src="https://images.unsplash.com/photo-1608797178974-15b35a64ede9?w=320&q=80" alt="Nuts">
+      <span class="food-label lbl-fat">🥜 Nuts → unsaturated fat</span>
+    </div>
+
+    <!-- Vegetables → vitamins A, C & K -->
+    <div class="food" style="left:642px; top:188px; width:162px; height:162px; transform:rotate(1.2deg)">
+      <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=340&q=80" alt="Vegetables">
+      <span class="food-label lbl-vit">🥦 Vegetables → vitamins A, C &amp; K</span>
+    </div>
+
+    <!-- Salmon → unsaturated fat -->
+    <div class="food" style="left:820px; top:156px; width:148px; height:148px; transform:rotate(-0.5deg)">
+      <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=320&q=80" alt="Salmon">
+      <span class="food-label lbl-fat">🐟 Salmon → unsaturated fat</span>
+    </div>
+
+    <!-- ROW 3 -->
+    <!-- Rice → starch (carb) -->
+    <div class="food" style="left:14px; top:368px; width:138px; height:152px; transform:rotate(-1deg)">
+      <img src="https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?w=300&q=80" alt="Rice">
+      <span class="food-label lbl-carb">🍚 Rice → starch</span>
+    </div>
+
+    <!-- Whole Wheat Bread → fiber -->
+    <div class="food" style="left:166px; top:348px; width:136px; height:136px; transform:rotate(1.9deg)">
+      <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=300&q=80" alt="Whole Wheat Bread">
+      <span class="food-label lbl-carb">🍞 Whole Wheat Bread → fiber</span>
+    </div>
+
+    <!-- Yogurt → protein -->
+    <div class="food" style="left:318px; top:378px; width:140px; height:140px; transform:rotate(-1.4deg)">
+      <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=350&q=80" alt="Yogurt">
+      <span class="food-label lbl-prot">🥛 Yogurt → protein</span>
+    </div>
+
+    <!-- Milk → saturated fat -->
+    <div class="food" style="left:474px; top:364px; width:144px; height:144px; transform:rotate(1.3deg)">
+      <img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=340&q=80" alt="Milk">
+      <span class="food-label lbl-fat">🥛 Milk → saturated fat</span>
+    </div>
+
+    <!-- Oranges / citrus → vitamin C -->
+    <div class="food" style="left:636px; top:376px; width:172px; height:150px; transform:rotate(-1.8deg)">
+      <img src="https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=340&q=80" alt="Oranges">
+      <span class="food-label lbl-vit">🍊 Oranges → vitamin C &amp; potassium</span>
+    </div>
+
+    <!-- Whole grain / oatmeal top-right gap fill -->
+    <div class="food" style="left:824px; top:334px; width:140px; height:168px; transform:rotate(1deg)">
+      <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=300&q=80" alt="Toast">
+      <span class="food-label lbl-carb">🥞 Toast → starch</span>
+    </div>
+
+  </div>
+
   <div class="footer">
-    2025 Stock Dashboard | Designed by Niroj Sapkota
+    <span class="footer-label">Key</span>
+    <div class="fleg"><div class="fdot" style="background:var(--carb)"></div>Carbohydrates</div>
+    <div class="fleg"><div class="fdot" style="background:var(--prot)"></div>Protein</div>
+    <div class="fleg"><div class="fdot" style="background:var(--fat)"></div>Fats</div>
+    <div class="fleg"><div class="fdot" style="background:var(--vit)"></div>Vitamins &amp; Minerals</div>
+    <span class="footer-right">Canada Food Guide</span>
   </div>
+
+</div>
+<script>
+  window.addEventListener('load', function() {
+    var imgs = document.querySelectorAll('img');
+    var broken = [];
+    imgs.forEach(function(img) {
+      if (!img.complete || img.naturalWidth === 0) {
+        broken.push(img.alt + ': ' + img.src);
+      }
+    });
+    if (broken.length > 0) {
+      var box = document.createElement('div');
+      box.style.cssText = 'position:fixed;bottom:16px;right:16px;background:#c0392b;color:white;padding:12px 16px;border-radius:10px;font-size:12px;z-index:9999;max-width:420px;line-height:1.6;font-family:sans-serif';
+      box.innerHTML = '<strong>⚠ Broken images:</strong><br>' + broken.join('<br>');
+      document.body.appendChild(box);
+    } else {
+      var box = document.createElement('div');
+      box.style.cssText = 'position:fixed;bottom:16px;right:16px;background:#27ae60;color:white;padding:12px 16px;border-radius:10px;font-size:12px;z-index:9999;font-family:sans-serif';
+      box.textContent = '✓ All images loaded successfully';
+      document.body.appendChild(box);
+      setTimeout(function(){ box.remove(); }, 4000);
+    }
+  });
+</script>
 </body>
 </html>
-
